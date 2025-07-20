@@ -29,13 +29,16 @@ def download():
 
 
 root.title("Fnafke's Youtube Video Downloader")
+
 url_label = Label(
     root, text="Provide the url of the Youtube Video you would like to download!", font=('calibre', 10, 'bold'))
-url_entry = Entry(root, textvariable=url_var, font=('calibre', 10, 'normal'))
+url_entry = Entry(root, textvariable=url_var, font=(
+    'calibre', 10, 'normal'), width=50)
 
 
 # positioning of all elements
 url_label.grid(row=0, column=0)
-url_entry.grid(row=0, column=1)
+url_entry.grid(row=1, column=0)
+root.grid_columnconfigure(0, weight=1)
 
 root.mainloop()
