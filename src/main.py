@@ -2,7 +2,7 @@ from tkinter import *
 import ctypes
 from tkinter import filedialog
 from tkinter import ttk
-from pytube import YouTube
+from pytubefix import YouTube
 import threading
 
 root = Tk()
