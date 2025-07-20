@@ -27,7 +27,7 @@ url_var = StringVar()
 download_path_var = StringVar()
 resolution_var = StringVar()
 resolution_var.set("Select a resolution:")
-resolution_list = ["144p", "244p", "360p", "480p",
+resolution_list = ["144p", "240p", "360p", "480p",
                    "720p", "1080p"]
 status_message_var = StringVar()
 
@@ -80,7 +80,7 @@ def threaded_download():
         return
 
     try:
-        yt = YouTube(url, on_complete_callback=on_progress)
+        yt = YouTube(url, on_progress_callback=on_progress)
         stream = yt.streams.filter(
             progressive=True, file_extension='mp4', res=resolution).first()
 
