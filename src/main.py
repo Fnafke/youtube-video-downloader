@@ -1,5 +1,6 @@
 from tkinter import *
 import ctypes
+from tkinter import filedialog
 
 root = Tk()
 ctypes.windll.shcore.SetProcessDpiAwareness(1)
@@ -29,6 +30,13 @@ status_message_var = StringVar()
 def clear_status_message():
     status_message_var.set("")
 
+# select a path
+
+
+def select_download_path():
+    path = filedialog.askdirectory()
+    if path:
+        download_path_var.set(path)
 
 # download function
 
@@ -58,6 +66,8 @@ download_path_label = Label(
     root, text="Select your download path!", font=('calibre', 10, 'bold'))
 download_path_entry = Entry(root, textvariable=download_path_var, font=(
     'calibre', 10, 'normal'), width=50)
+download_path_select_button = Button(
+    root, text="Browse", command=select_download_path)
 url_submit_button = Button(root, text="Download", font=(
     'calibre', 10, 'normal'), command=download)
 status_message = Label(root, textvariable=status_message_var)
@@ -67,8 +77,9 @@ url_label.grid(row=0, column=0)
 url_entry.grid(row=1, column=0)
 download_path_label.grid(row=2, column=0)
 download_path_entry.grid(row=3, column=0)
-url_submit_button.grid(row=4, column=0)
-status_message.grid(row=5, column=0)
+download_path_select_button.grid(row=4, column=0)
+url_submit_button.grid(row=6, column=0)
+status_message.grid(row=7, column=0)
 root.grid_columnconfigure(0, weight=1)
 
 root.mainloop()
