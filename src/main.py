@@ -20,12 +20,32 @@ center_window(800, 650)
 
 # declare url variable
 url_var = StringVar()
+download_path_var = StringVar()
+status_message_var = StringVar()
+
+# clear the status message variable
+
+
+def clear_status_message():
+    status_message_var.set("")
+
 
 # download function
 
 
 def download():
+    clear_status_message()
+
     url = url_var.get()
+    download_path = download_path_var.get()
+
+    if len(download_path.strip()) < 1:
+        status_message_var.set("Download path is required!")
+
+    try:
+        ...
+    except:
+        ...
 
 
 root.title("Fnafke's Youtube Video Downloader")
@@ -34,11 +54,21 @@ url_label = Label(
     root, text="Provide the url of the Youtube Video you would like to download!", font=('calibre', 10, 'bold'))
 url_entry = Entry(root, textvariable=url_var, font=(
     'calibre', 10, 'normal'), width=50)
-
+download_path_label = Label(
+    root, text="Select your download path!", font=('calibre', 10, 'bold'))
+download_path_entry = Entry(root, textvariable=download_path_var, font=(
+    'calibre', 10, 'normal'), width=50)
+url_submit_button = Button(root, text="Download", font=(
+    'calibre', 10, 'normal'), command=download)
+status_message = Label(root, textvariable=status_message_var)
 
 # positioning of all elements
 url_label.grid(row=0, column=0)
 url_entry.grid(row=1, column=0)
+download_path_label.grid(row=2, column=0)
+download_path_entry.grid(row=3, column=0)
+url_submit_button.grid(row=4, column=0)
+status_message.grid(row=5, column=0)
 root.grid_columnconfigure(0, weight=1)
 
 root.mainloop()
