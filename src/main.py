@@ -1,6 +1,7 @@
 from tkinter import *
 import ctypes
 from tkinter import filedialog
+from tkinter import ttk
 from pytube import YouTube
 
 root = Tk()
@@ -67,7 +68,7 @@ def download():
 
     try:
         yt = YouTube(url)
-        stream = yt.streams.get_by_resolution()
+        stream = yt.streams.get_by_resolution(resolution=resolution)
     except:
         ...
 
@@ -91,6 +92,8 @@ resolution_list_menu = OptionMenu(root, resolution_var, *resolution_list)
 url_submit_button = Button(root, text="Download", font=(
     'calibre', 10, 'normal'), command=download)
 
+progressbar = ttk.Progressbar(orient=HORIZONTAL, length=200)
+
 status_message = Label(root, textvariable=status_message_var)
 
 # positioning of all elements
@@ -101,7 +104,8 @@ download_path_entry.grid(row=3, column=0)
 download_path_select_button.grid(row=4, column=0)
 resolution_list_menu.grid(row=5, column=0)
 url_submit_button.grid(row=6, column=0)
-status_message.grid(row=7, column=0)
+progressbar.grid(row=7, column=0)
+status_message.grid(row=8, column=0)
 root.grid_columnconfigure(0, weight=1)
 
 root.mainloop()
