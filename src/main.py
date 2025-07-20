@@ -3,6 +3,7 @@ import ctypes
 from tkinter import filedialog
 from tkinter import ttk
 from pytube import YouTube
+import threading
 
 root = Tk()
 ctypes.windll.shcore.SetProcessDpiAwareness(1)
@@ -44,15 +45,27 @@ def select_download_path():
     if path:
         download_path_var.set(path)
 
+
+# callback function for the download progress bar
+def on_progress(stream, chunk, bytes_remaining):
+    total_size = stream.filesize
+    bytes_downloaded = total_size - bytes_remaining
+    percent = int((bytes_downloaded / total_size) * 100)
+    progressbar['value'] = percent
+    root.update_idletasks()
+
+
 # download function
 
 
-def download():
+def threaded_download():
     clear_status_message()
 
     url = url_var.get()
     download_path = download_path_var.get()
     resolution = resolution_var.get()
+
+    progressbar['value'] = 0
 
     if len(url.strip()) < 1:
         status_message_var.set("URL is required!")
@@ -63,14 +76,30 @@ def download():
         return
 
     if resolution not in resolution_list:
-        status_message_var.set("Select a valid resoltion!")
+        status_message_var.set("Select a valid resolution!")
         return
 
     try:
-        yt = YouTube(url)
-        stream = yt.streams.get_by_resolution(resolution=resolution)
-    except:
-        ...
+        yt = YouTube(url, on_complete_callback=on_progress)
+        stream = yt.streams.filter(
+            progressive=True, file_extension='mp4', res=resolution).first()
+
+        if not stream:
+            status_message_var.set(
+                "Resolution is not available for this video!")
+            return
+
+        status_message_var.set("Downloading...")
+        stream.download(output_path=download_path)
+        status_message_var.set("Download complete!")
+        progressbar['value'] = 100
+
+    except Exception as ex:
+        status_message_var.set("An error occurred: " + str(ex))
+
+
+def download():
+    threading.Thread(target=threaded_download).start()
 
 
 root.title("Fnafke's Youtube Video Downloader")
@@ -92,7 +121,8 @@ resolution_list_menu = OptionMenu(root, resolution_var, *resolution_list)
 url_submit_button = Button(root, text="Download", font=(
     'calibre', 10, 'normal'), command=download)
 
-progressbar = ttk.Progressbar(orient=HORIZONTAL, length=200)
+progressbar = ttk.Progressbar(
+    orient=HORIZONTAL, length=200)
 
 status_message = Label(root, textvariable=status_message_var)
 
