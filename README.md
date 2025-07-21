@@ -18,7 +18,7 @@ A simple desktop app to download YouTube videos in your selected resolution usin
    cd youtube-video-downloader/src
    ```
 
-2. **Install the required package:**
+2. **Install the required packages:**
 
    ```bash
    pip install pytubefix
@@ -26,6 +26,8 @@ A simple desktop app to download YouTube videos in your selected resolution usin
    ```
 
 ## 🚀 Usage
+
+### 🐍 Run from Source (Python)
 
 1. Run the Python script:
 
@@ -35,10 +37,21 @@ A simple desktop app to download YouTube videos in your selected resolution usin
 
 2. Paste a YouTube video URL, select your download path and preferred resolution, then click **Download**.
 
+### 💻 Use the Compiled EXE (Windows)
+
+A precompiled executable is available in the `src/dist/` folder:
+
+```
+/src/dist/main.exe
+```
+
+You can double-click the `.exe` to run the app without installing Python or any libraries.
+
 ## ❗ Notes
 
 - Some resolutions (e.g., `144p`) may not be available for all videos.
 - Make sure the video is not private, a YouTube Short, or age-restricted.
+- When downloading as MP3, audio will be extracted from the highest available audio stream.
 
 ## 📜 License
 
