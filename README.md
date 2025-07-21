@@ -22,6 +22,7 @@ A simple desktop app to download YouTube videos in your selected resolution usin
 
    ```bash
    pip install pytubefix
+   pip install moviepy
    ```
 
 ## 🚀 Usage
